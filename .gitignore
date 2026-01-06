@@ -1,0 +1,9 @@
+.env
+secrets/
+assets/videos/
+assets/images/
+data/
+frames/
+frames_up/
+**/__pycache__/**
+.venv/
