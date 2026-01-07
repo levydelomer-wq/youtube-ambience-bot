@@ -2,10 +2,11 @@ import json
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from bot_types import Concept, Prompts
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client: OpenAI = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 SYSTEM_PROMPT = """
 You generate high-quality prompts for AI image and video generation
@@ -33,7 +34,7 @@ not from camera motion.
 
 
 class PromptAgent:
-    def generate(self, concept: dict) -> dict:
+    def generate(self, concept: Concept, image_resolution: str = "1536x1024") -> Prompts:
         user_prompt = f"""
 Create prompts for a long ambience video.
 
@@ -41,7 +42,7 @@ Ambience: {concept['ambience']}
 Mood: {concept['mood']}
 
 IMAGE PROMPT REQUIREMENTS:
-- Resolution: 1536x1024
+- Resolution: {image_resolution}
 - Static camera, eye-level
 - Close, dominant focal element (fireplace, window, sky, ocean, etc.)
 - Minimal furniture, uncluttered space
@@ -72,29 +73,17 @@ VIDEO PROMPT REQUIREMENTS:
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt}
-            ]
+            ],
+            response_format={"type": "json_object"}
         )
 
-        return response.choices[0].message.content
+        return json.loads(response.choices[0].message.content)
 
-    def save(self, prompts: dict):
+    def save(self, prompts: Prompts) -> None:
         os.makedirs("data/prompts", exist_ok=True)
 
-        image_prompt = prompts["image_prompt"]
-        video_prompt = prompts["video_prompt"]
-
-        if isinstance(image_prompt, dict):
-            image_prompt = "\n".join(
-                f"{k}: {v}" for k, v in image_prompt.items()
-            )
-
-        if isinstance(video_prompt, dict):
-            video_prompt = "\n".join(
-                f"{k}: {v}" for k, v in video_prompt.items()
-            )
-
-        image_prompt = str(image_prompt)
-        video_prompt = str(video_prompt)
+        image_prompt: str = prompts["image_prompt"]
+        video_prompt: str = prompts["video_prompt"]
 
         with open("data/prompts/image_prompt.txt", "w", encoding="utf-8") as f:
             f.write(image_prompt)

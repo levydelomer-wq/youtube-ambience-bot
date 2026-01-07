@@ -2,10 +2,11 @@ import json
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from bot_types import Concept, Metadata
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client: OpenAI = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 SYSTEM_PROMPT = """
 You generate YouTube metadata for long ambience videos.
@@ -16,7 +17,7 @@ Output MUST be valid JSON with keys:
 """
 
 class MetadataAgent:
-    def generate(self, concept: dict) -> dict:
+    def generate(self, concept: Concept) -> Metadata:
         user_prompt = f"""
 Create metadata for a {concept['duration']} YouTube ambience video.
 
@@ -42,7 +43,7 @@ Rules:
 
         return json.loads(response.choices[0].message.content)
 
-    def save(self, metadata: dict):
+    def save(self, metadata: Metadata) -> None:
         os.makedirs("data/metadata", exist_ok=True)
 
         with open("data/metadata/title.txt", "w", encoding="utf-8") as f:

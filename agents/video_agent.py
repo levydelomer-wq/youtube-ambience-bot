@@ -1,28 +1,34 @@
 import os
 import shutil
 import requests
+from video_backends.base import VideoBackend
 from video_backends.replicate import ReplicateVideoBackend
-from video_backends.mock import MockVideoBackend
 from config import DRY_RUN
 
+REQUEST_TIMEOUT: int = 300  # 5 minutes for large video downloads
+
+
 class VideoAgent:
-    def __init__(self, backend=None):
+    backend: VideoBackend
+
+    def __init__(self, backend: VideoBackend | None = None) -> None:
         self.backend = backend or ReplicateVideoBackend()
 
-    def run(self, image_path, video_prompt, filename):
-        video_url = self.backend.generate(
+    def run(self, image_path: str, video_prompt: str, filename: str) -> str:
+        video_url: str = self.backend.generate(
             image_path=image_path,
             video_prompt=video_prompt,
         )
 
-        output_path = os.path.join("assets", "videos", filename)
+        output_path: str = os.path.join("assets", "videos", filename)
 
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
         if not DRY_RUN:
-            video_bytes = requests.get(video_url).content
+            response: requests.Response = requests.get(video_url, timeout=REQUEST_TIMEOUT)
+            response.raise_for_status()
             with open(output_path, "wb") as f:
-                f.write(video_bytes)
+                f.write(response.content)
         else:
             shutil.copy(video_url, output_path)
 

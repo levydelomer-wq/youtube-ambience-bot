@@ -1,1 +1,1 @@
-DRY_RUN=True
+DRY_RUN: bool = True

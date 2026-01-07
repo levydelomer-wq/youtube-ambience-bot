@@ -1,4 +1,15 @@
-def flatten_prompt(prompt):
+def flatten_prompt(prompt: str | dict[str, str]) -> str:
+    """Convert a prompt to a flat string format.
+
+    Args:
+        prompt: Either a string or a dict with string keys and values.
+
+    Returns:
+        A string representation of the prompt.
+
+    Raises:
+        TypeError: If prompt is neither str nor dict.
+    """
     if isinstance(prompt, str):
         return prompt
 
@@ -9,5 +20,3 @@ def flatten_prompt(prompt):
         )
 
     raise TypeError("Prompt must be str or dict")
-
-# TODO move to utils/

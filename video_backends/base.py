@@ -7,7 +7,6 @@ class VideoBackend(ABC):
         self,
         image_path: str,
         video_prompt: str,
-        output_path: str
     ) -> str:
         """
         Generate a short loopable video from a canonical image.
@@ -19,6 +18,6 @@ class VideoBackend(ABC):
         - Must be loop-friendly (temporal coherence)
 
         Returns:
-            Path to generated video file
+            URL or path to generated video
         """
         pass
