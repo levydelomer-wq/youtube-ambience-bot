@@ -27,8 +27,7 @@ class ImageAgent:
         result = client.images.generate(
             model="gpt-image-1",
             prompt=normalized_prompt,
-            size=size,
-            response_format="b64_json"
+            size=size
         )
 
         if not result.data:

@@ -1,9 +1,67 @@
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# Environment & Secrets
 .env
+.env.local
+.env.*.local
 secrets/
+
+# IDE & Tools
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Project-specific generated files
 assets/videos/
 assets/images/
+assets/audio/
 data/
 frames/
 frames_up/
-**/__pycache__/**
-.venv/
+logs/
+
+# Type checking
+.mypy_cache/
+.pytype/
+
+# Misc
+*.log
+.DS_Store
+Thumbs.db

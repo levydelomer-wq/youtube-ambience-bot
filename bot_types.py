@@ -16,3 +16,4 @@ class Metadata(TypedDict):
 class Prompts(TypedDict):
     image_prompt: str
     video_prompt: str
+    audio_prompt: str

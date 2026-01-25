@@ -12,3 +12,6 @@ google-api-python-client-stubs
 google-auth-stubs
 google-auth-oauthlib-stubs
 types-requests
+
+# Testing
+pytest

@@ -7,13 +7,12 @@ from config import DRY_RUN
 from video_backends.mock import MockVideoBackend
 from video_backends.base import VideoBackend
 
-PORTRAIT_SIZE = "1024x1792"
+PORTRAIT_SIZE = "1024x1536"
 
-# TODO: Define your concept here - what ambience works best for portrait/vertical videos?
-# Consider: shorter attention spans, mobile viewing, visually striking vertical compositions
+# Dancing robot in lego world - entertaining viral content
 concept: Concept = {
-    "ambience": "",  # e.g., "rainy window at night", "northern lights", "waterfall close-up"
-    "mood": "",      # e.g., "mysterious, calming", "awe-inspiring", "meditative"
+    "ambience": "cute toy robot doing the robot dance in a colorful lego world",
+    "mood": "fun, playful, entertaining, quirky",
     "duration": "short"
 }
 

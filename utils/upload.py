@@ -113,7 +113,7 @@ def upload_video(
         },
         media_body=MediaFileUpload(
             video_path,
-            chunksize=-1,
+            chunksize=50 * 1024 * 1024,  # 50MB chunks for progress updates
             resumable=True
         )
     )
